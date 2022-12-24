@@ -1,18 +1,39 @@
 import React, { useState } from 'react';
+import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import { context } from "./context";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Post from "./pages/Post";
+import About from "./pages/About";
+import Error from "./pages/Error";
+import PostItem from './pages/Post/PostItem';
+import Tab1 from './pages/About/Tab1';
+import Tab2 from './pages/About/Tab2';
 
 const App = () => {
 
-  const [data, setData] = useState({ message: "useContext" });
-
   return (
     <>
-      <context.Provider value={ data } >
+      <Navbar />
 
-        <Home />
+      <main>
+        <div className="container">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/posts" element={<Post />} />
+            <Route path="/posts/:id" element={<PostItem />} />
+            <Route path="/about" element={<About />} >
+              <Route path="/about/tab1" element={<Tab1 />} />
+              <Route path="/about/tab2" element={<Tab2 />} />
+            </Route>
+            <Route path="*" element={<Error />} />
 
-      </context.Provider>
+          </Routes>
+        </div>
+      </main>
+
+      <Footer />
+
     </>
   );
 };
