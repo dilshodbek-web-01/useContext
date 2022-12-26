@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import {api} from "../../api/api";
 
 const index = () => {
 
     const [post, setPost] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    const fetchPost = async () => {
-        const response = await fetch('https://jsonplaceholder.typicode.com/posts');
-        const result = await response.json();
-        setPost(result);
-        setLoading(true);
-
-    }
 
     useEffect(() => {
-        fetchPost();
+        api.getPosts().then((post)=>{
+            setPost(post);
+            setLoading(true);
+        })
     }, []);
 
     if(!loading) {
@@ -28,7 +25,7 @@ const index = () => {
             <h1>post</h1>
             <ul className='list-group w-75 mx-auto p-3 mt-5'>
                 {
-                    post.length > 0 && post.map((el) => {
+                    post?.length > 0 && post.map((el) => {
                         return <li key={el.id} className='list-group-item'>
                             <Link to={`/posts/${el.id}`}>
                                  {el.title} 

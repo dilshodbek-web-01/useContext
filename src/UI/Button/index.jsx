@@ -1,10 +1,10 @@
 import React from 'react';
 import "./style.scss";
 
-const index = () => {
+const index = ({btn, content, type, children}) => {
     return (
-        <button>
-            Button
+        <button type={type} className={btn}>
+            {children}
         </button>
     );
 };

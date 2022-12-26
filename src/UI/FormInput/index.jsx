@@ -1,10 +1,14 @@
 import React from 'react';
 import "./style.scss";
 
-const index = () => {
+const index = ({ type, pl, fo, labelText, val, setVal }) => {
     return (
         <>
-            <input type="text" className='form-control' />
+            <label htmlFor={fo} className="w-100 my-2" >
+                <p>{labelText}</p>
+                <input type={type} id={fo} className='form-control p-3 w-100 my-1' placeholder={pl} 
+                value={val} onChange={(e)=> setVal(e.target.value)} />
+            </label>
         </>
     );
 };

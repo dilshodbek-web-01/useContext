@@ -43,6 +43,9 @@ const index = () => {
                             <li className="nav-item">
                                 <NavLink className="nav-link" to="/posts">Posts</NavLink>
                             </li>
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="/users">UserList</NavLink>
+                            </li>
                         </ul>
 
                     </div>
