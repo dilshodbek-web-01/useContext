@@ -1,21 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import {api} from "../../api/api";
+import { api } from "../../api/api";
+import ItemPost from './ItemPost';
 
 const index = () => {
 
     const [post, setPost] = useState([]);
     const [loading, setLoading] = useState(false);
 
+    const [limt, setLimt] = useState(10);
+    const [point, setPoint] = useState(1);
+
+    const firstPoint = limt * point;
+    const lastPoint = firstPoint - limt;
+
+    const lastPage = post.slice(lastPoint, firstPoint)
 
     useEffect(() => {
-        api.getPosts().then((post)=>{
+        api.getPosts().then((post) => {
             setPost(post);
             setLoading(true);
         })
     }, []);
 
-    if(!loading) {
+    const paginate=(pageNumber)=> {
+        setPoint(pageNumber)
+    }
+
+    if (!loading) {
         return <h1>Loading . . .</h1>
     }
 
@@ -23,17 +35,7 @@ const index = () => {
     return (
         <div className='p-5'>
             <h1>post</h1>
-            <ul className='list-group w-75 mx-auto p-3 mt-5'>
-                {
-                    post?.length > 0 && post.map((el) => {
-                        return <li key={el.id} className='list-group-item'>
-                            <Link to={`/posts/${el.id}`}>
-                                 {el.title} 
-                            </Link>
-                        </li>
-                    })
-                }
-            </ul>
+            <ItemPost post={post} limt={limt} lastPage={lastPage} active={point} paginate={paginate} />
         </div>
     );
 };

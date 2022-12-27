@@ -1,3 +1,9 @@
 {
-  "users": []
+  "users": [
+    {
+      "id": "8d30ac66-5839-402a-933b-20c5e5ca8efd",
+      "username": "dilshodbek",
+      "age": "24"
+    }
+  ]
 }

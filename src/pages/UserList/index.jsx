@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import "./style.scss";
 import { api } from "../../api/api";
 import { Link } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+
 
 const index = () => {
 
@@ -11,7 +12,9 @@ const index = () => {
 
     const removeUserItem = (userId) => {
         api.removeUser(userId);
-        toast.success('Removed user successfully');
+        toast.success('Removed user successfully', {
+            autoClose: 1500
+        });
     }
 
     useEffect(() => {
@@ -23,7 +26,6 @@ const index = () => {
     // removeUserItem
     
 
-   
     if (!loading) {
         return <h1>Loading . . .</h1>
     }
