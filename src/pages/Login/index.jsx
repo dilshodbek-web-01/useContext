@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FormInput from "../../UI/FormInput";
 import Button from "../../UI/Button";
+import { api } from '../../api/api';
 import { toast, ToastContainer } from "react-toastify";
+import { Navigate, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
 
 const index = () => {
 
-
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    let token = localStorage.getItem("token");
+    let navigate=useNavigate();
+
+    useEffect(()=> {
+        const auth=useAuth();
+        if(auth) {
+            return navigate("/")
+        }
+    }, [navigate]);
 
     const auth = (e) => {
 
@@ -26,10 +37,28 @@ const index = () => {
         if (check.username || check.password) {
             toast.error('Please enter username and password');
         } else {
+            toast.success("Loading . . .", {
+                autoClose:1500
+            })
+            api.useAuth(submitForm)
+                .then((response) => response.json())
+                .then((res) => {
+                    console.log(res);
+                    localStorage.setItem("token", res.data.token);
+                    navigate('/');
+                    toast.success('new User successfully sign-in', {
+                        autoClose:1500
+                    });
+                })
+                .catch((err)=> {
+                    toast.error("error authen", {
+                        autoClose:1500
+                    })
+                })
+
 
             setUsername('');
             setPassword('');
-            toast.success('new User successfully sign-in');
         }
 
     };
@@ -38,7 +67,7 @@ const index = () => {
         <div className="home card bg-light shadow-lg p-5 mt-5 mx-auto w-75">
             <h1>Login Page</h1>
 
-            <form action="#" onSubmit={() => auth()}>
+            <form action="#" onSubmit={(e) => auth(e)}>
 
                 <FormInput type="text" labelText={"Enter username"} pl={"Enter username"} fo={"user"}
                     val={username} setVal={setUsername} />

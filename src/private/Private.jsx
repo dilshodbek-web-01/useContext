@@ -1,12 +1,13 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import "./style.scss";
 import { Outlet, Navigate } from 'react-router-dom';
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { useAuth } from '../hooks/useAuth';
 
 const Private = () => {
 
-    const auth = false;
+    const auth=useAuth();
 
     return (
         <>

@@ -1,4 +1,6 @@
 let baseURL = "http://localhost:8080";
+let URL = "https://jsonplaceholder.typicode.com";
+let loginURL = "https://task.samid.uz/v1/user/sign-in";
 
 export const api = {
 
@@ -24,31 +26,39 @@ export const api = {
         });
     },
 
-    getUserItem: async (id)=> {
+    getUserItem: async (id) => {
         const response = await fetch(`${baseURL}/users/${id}`);
         const result = await response.json();
         return result;
     },
 
-    removeUser: (id)=> {
+    removeUser: (id) => {
         fetch(`${baseURL}/users/${id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({}) 
+            body: JSON.stringify({})
         });
     },
 
-    updateUser: (id, params)=> {
+    updateUser: (id, params) => {
         fetch(`${baseURL}/users/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({params})
+            body: JSON.stringify({ params })
         });
     },
+
+    useAuth: (params) => fetch(loginURL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify( params )
+    }),
 
 
 };

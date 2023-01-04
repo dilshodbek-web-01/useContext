@@ -1,8 +1,12 @@
 import React from 'react';
 import "./style.scss";
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { logout } from '../../hooks/useAuth';
 
-const index = () => {
+const index = ({ setAuth }) => {
+
+    const navigate = useNavigate();
+
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -113,7 +117,7 @@ const index = () => {
                                     <a className="dropdown-item" href="#">Settings</a>
                                 </li>
                                 <li>
-                                    <a className="dropdown-item" href="#">Logout</a>
+                                    <a className="dropdown-item" href="#" onClick={() => logout(navigate)}>Logout</a>
                                 </li>
                             </ul>
                         </div>
